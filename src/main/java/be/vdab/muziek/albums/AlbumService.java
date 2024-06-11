@@ -21,4 +21,15 @@ public class AlbumService {
     Optional<Album> findById(long id){
         return albumRepository.findById(id);
     }
+    List<Album> findByJaar(int jaar){
+        return albumRepository.findByJaarOrderByNaam(jaar);
+    }
+
+    @Transactional
+    void wijzigScore(long id,int score){
+        albumRepository.findById(id)
+                .orElseThrow(AlbumNietGevondenException::new)
+                .setScore(score);
+    }
+
 }

@@ -1,9 +1,9 @@
 package be.vdab.muziek.albums;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,4 +47,18 @@ public class AlbumController {
                 .map(Detail::new)
                 .orElseThrow(AlbumNietGevondenException::new);
     }
+
+    @GetMapping(params = "jaar")
+    Stream<AlbumBeKnopt> findByJaar(int jaar) {
+        return albumService.findByJaar(jaar)
+                .stream()
+                .map(album -> new AlbumBeKnopt(album));
+    }
+
+    @PatchMapping("{id}/score")
+    void wijzigScore(@PathVariable long id,
+                     @RequestBody @Min(0) @Max(10) int score) {
+        albumService.wijzigScore(id, score);
+    }
+
 }

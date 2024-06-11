@@ -13,4 +13,6 @@ interface AlbumRepository extends JpaRepository<Album,Long> {
     List<Album> findAll();
 
     Optional<Album> findById(Long id);
+
+    List<Album> findByJaarOrderByNaam(int jaar);
 }

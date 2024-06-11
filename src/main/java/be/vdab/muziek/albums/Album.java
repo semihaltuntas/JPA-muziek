@@ -49,7 +49,8 @@ public class Album {
         return tracks.stream()
                 .map(track -> track.getTijd())
                 .reduce(LocalTime.MIN, (albumTijd, trackTijd)
-                        -> albumTijd.plusHours(trackTijd.getHour())
+                        -> albumTijd
+                        .plusHours(trackTijd.getHour())
                         .plusMinutes(trackTijd.getMinute())
                         .plusSeconds(trackTijd.getSecond()));
     }
